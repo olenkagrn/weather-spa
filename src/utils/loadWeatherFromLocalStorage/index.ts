@@ -1,0 +1,1 @@
+export { loadWeatherFromLocalStorage } from "./loadWeatherFromLocalStorage";

@@ -1,0 +1,18 @@
+.iconBtn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem;
+
+  svg {
+    transition: color 0.2s;
+    color: var(--text);
+  }
+}
+
+.favoriteIcon {
+  svg {
+    color: var(--fill-heart);
+  }
+}

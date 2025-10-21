@@ -1,0 +1,30 @@
+.favoriteSection {
+  width: 80%;
+  margin-top: 10rem;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+}
+.favoriteList {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 2.4rem;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.message {
+  margin-top: 8rem;
+  font-size: 1.2rem;
+  color: var(--placeholder-text);
+}
+
+.weatherHeader {
+  font-size: 2.4rem;
+  margin-bottom: 4rem;
+}

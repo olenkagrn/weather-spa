@@ -1,0 +1,58 @@
+.dailyForecast {
+  h3 {
+    text-align: left;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: var(--forecast-bg);
+    border-radius: 0.8rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    border-bottom: 1px solid var(--table-border);
+    font-size: 1rem;
+    color: #555;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .day {
+      flex: 1;
+      text-align: left;
+      font-weight: 500;
+      color: #333;
+    }
+    .tempRange {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: var(--text);
+      width: 7rem;
+      justify-content: flex-end;
+    }
+    .icon {
+      width: 3rem;
+      height: 3rem;
+      margin: 0 0.8rem;
+    }
+    .description {
+      flex: 2;
+      text-align: left;
+      color: #777;
+      font-size: 0.95rem;
+    }
+    .dropdownArrow {
+      color: #999;
+    }
+  }
+}
