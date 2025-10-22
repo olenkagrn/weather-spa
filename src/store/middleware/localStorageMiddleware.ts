@@ -10,26 +10,29 @@ export const localStorageMiddleware: Middleware =
       const state = store.getState();
       const weatherState: WeatherState = state.weather;
 
-      const filteredCities = weatherState.cities.filter(
-        (city) => weatherState.status[city] === "succeeded"
-      );
-
-      const filteredData: WeatherState = {
-        cities: filteredCities,
+      // Зберігаємо всі улюблені міста, незалежно від статусу завантаження
+      const dataToSave: WeatherState = {
+        cities: weatherState.cities, // Зберігаємо всі міста
         data: {},
         status: {},
         error: {},
         loadedCities: {},
       };
 
-      filteredCities.forEach((city) => {
-        filteredData.data[city] = weatherState.data[city];
-        filteredData.status[city] = weatherState.status[city];
-        filteredData.error[city] = weatherState.error[city];
-        filteredData.loadedCities[city] = true; // ← Виправлення: зберігаємо що дані завантажені
+      // Зберігаємо дані тільки для міст з успішно завантаженими даними
+      weatherState.cities.forEach((city) => {
+        if (
+          weatherState.status[city] === "succeeded" &&
+          weatherState.data[city]
+        ) {
+          dataToSave.data[city] = weatherState.data[city];
+          dataToSave.status[city] = weatherState.status[city];
+          dataToSave.error[city] = weatherState.error[city];
+          dataToSave.loadedCities[city] = true;
+        }
       });
 
-      localStorage.setItem(LS_KEY, JSON.stringify({ weather: filteredData }));
+      localStorage.setItem(LS_KEY, JSON.stringify({ weather: dataToSave }));
     } catch {
       throw new Error("Failed to save state to localStorage");
     }

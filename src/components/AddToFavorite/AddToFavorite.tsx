@@ -3,7 +3,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { addCity } from "@/store/weather/weatherSlice";
+import { addCity, removeCity } from "@/store/weather/weatherSlice";
 import { Heart } from "lucide-react";
 import styles from "./AddToFavorite.module.scss";
 
@@ -21,6 +21,8 @@ export default function AddToFavorite({ city, className = "" }: Props) {
     e.stopPropagation();
     if (!isFavorite) {
       dispatch(addCity(city));
+    } else {
+      dispatch(removeCity(city));
     }
   };
 
@@ -31,7 +33,7 @@ export default function AddToFavorite({ city, className = "" }: Props) {
       onClick={handleClick}
       aria-label="Add to favorites"
     >
-      <Heart size={24} />
+      <Heart size={24} fill={isFavorite ? "currentColor" : "none"} />
     </button>
   );
 }
