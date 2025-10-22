@@ -203,7 +203,7 @@ describe("GET /api/weather/forecast", () => {
   });
 
   describe("Error handling", () => {
-    test("returns 500 error when getForecast returns null", async () => {
+    test("returns 404 error when getForecast returns null", async () => {
       mockedGetForecast.mockResolvedValue(null);
 
       const req = new Request(
@@ -213,10 +213,12 @@ describe("GET /api/weather/forecast", () => {
       const response = await GET(req);
       const data = await response.json();
 
-      expect(data).toEqual({ message: "An error occurred" });
+      expect(data).toEqual({
+        message: "City not found or forecast data unavailable",
+      });
       expect(mockedNextResponse.json).toHaveBeenCalledWith(
-        { message: "An error occurred" },
-        { status: 500 }
+        { message: "City not found or forecast data unavailable" },
+        { status: 404 }
       );
     });
 
@@ -236,7 +238,10 @@ describe("GET /api/weather/forecast", () => {
         { message: "Network connection failed" },
         { status: 500 }
       );
-      expect(consoleSpy).toHaveBeenCalledWith(testError);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Forecast API error for city "TestCity":',
+        testError
+      );
     });
 
     test("handles non-Error exceptions gracefully", async () => {
@@ -254,7 +259,10 @@ describe("GET /api/weather/forecast", () => {
         { message: "An error occurred" },
         { status: 500 }
       );
-      expect(consoleSpy).toHaveBeenCalledWith("String error");
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Forecast API error for city "TestCity":',
+        "String error"
+      );
     });
 
     test("handles null/undefined exceptions gracefully", async () => {
@@ -272,7 +280,10 @@ describe("GET /api/weather/forecast", () => {
         { message: "An error occurred" },
         { status: 500 }
       );
-      expect(consoleSpy).toHaveBeenCalledWith(null);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Forecast API error for city "TestCity":',
+        null
+      );
     });
 
     test("logs errors to console", async () => {
@@ -285,7 +296,10 @@ describe("GET /api/weather/forecast", () => {
 
       await GET(req);
 
-      expect(consoleSpy).toHaveBeenCalledWith(testError);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Forecast API error for city "TestCity":',
+        testError
+      );
     });
   });
 
@@ -449,8 +463,8 @@ describe("GET /api/weather/forecast", () => {
       const response = await GET(req);
       const data = await response.json();
 
-      expect(response.status).toBe(500);
-      expect(data.message).toBe("An error occurred");
+      expect(response.status).toBe(404);
+      expect(data.message).toBe("City not found or forecast data unavailable");
     });
 
     test("does not call getForecast when city is missing", async () => {

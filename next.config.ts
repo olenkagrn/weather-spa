@@ -1,19 +1,15 @@
 const nextConfig = {
-  // Оптимізації продуктивності
   swcMinify: true,
   poweredByHeader: false,
   compress: true,
 
-  // Експериментальні налаштування для кращої продуктивності
   experimental: {
     optimizeCss: true,
     gzipSize: true,
   },
 
-  // Webpack оптимізації
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   webpack: (config: any, { dev, isServer }: any) => {
-    // Оптимізації для production
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: "all",
@@ -50,7 +46,6 @@ const nextConfig = {
 
   outputFileTracingRoot: __dirname,
 
-  // Відключення попереджень про preload в development
   eslint: {
     ignoreDuringBuilds: false,
   },

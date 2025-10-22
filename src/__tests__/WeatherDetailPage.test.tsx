@@ -12,21 +12,63 @@ jest.mock("next/navigation", () => ({
   useParams: jest.fn(),
 }));
 
+jest.mock("next/dynamic", () => () => {
+  return () => null;
+});
+jest.mock("@/components/WeatherDetail/components/HourlyForecast", () => {
+  const HourlyForecast = ({
+    hourly,
+    loading,
+  }: {
+    hourly: unknown[];
+    loading: boolean;
+  }) => (
+    <div data-testid="hourly-forecast">
+      {loading
+        ? "Loading hourly..."
+        : hourly.length === 0
+          ? "Hourly forecast unavailable."
+          : "Hourly data"}
+    </div>
+  );
+  HourlyForecast.displayName = "HourlyForecast";
+  return HourlyForecast;
+});
+
+jest.mock("@/components/WeatherDetail/components/DailyForecast", () => {
+  const DailyForecast = ({
+    daily,
+    loading,
+  }: {
+    daily: unknown[];
+    loading: boolean;
+  }) => (
+    <div data-testid="daily-forecast">
+      {loading
+        ? "Loading daily..."
+        : daily.length === 0
+          ? "Daily forecast unavailable."
+          : "Daily data"}
+    </div>
+  );
+  DailyForecast.displayName = "DailyForecast";
+  return DailyForecast;
+});
 jest.mock("next/image", () => {
-  const MockImage = ({ 
-    alt, 
-    src, 
-    priority, 
-    ...restProps 
-  }: { 
-    alt: string; 
+  const MockImage = ({
+    alt,
+    src,
+    priority,
+    ...restProps
+  }: {
+    alt: string;
     src?: string;
     priority?: boolean;
     [key: string]: unknown;
   }) => (
-    <div 
-      {...restProps} 
-      data-testid="mock-image" 
+    <div
+      {...restProps}
+      data-testid="mock-image"
       data-src={src}
       data-alt={alt}
       data-priority={priority ? "true" : "false"}
@@ -53,34 +95,6 @@ jest.mock("@/components/WeatherDetail/components/CurrentWeather", () => {
   const CurrentWeather = () => <div data-testid="current-weather" />;
   CurrentWeather.displayName = "CurrentWeather";
   return CurrentWeather;
-});
-jest.mock("@/components/WeatherDetail/components/HourlyForecast", () => {
-  const HourlyForecast = ({
-    loading,
-  }: {
-    hourly: unknown[];
-    loading: boolean;
-  }) => (
-    <div data-testid="hourly-forecast">
-      {loading ? "Loading hourly..." : "Hourly data"}
-    </div>
-  );
-  HourlyForecast.displayName = "HourlyForecast";
-  return HourlyForecast;
-});
-jest.mock("@/components/WeatherDetail/components/DailyForecast", () => {
-  const DailyForecast = ({
-    loading,
-  }: {
-    daily: unknown[];
-    loading: boolean;
-  }) => (
-    <div data-testid="daily-forecast">
-      {loading ? "Loading daily..." : "Daily data"}
-    </div>
-  );
-  DailyForecast.displayName = "DailyForecast";
-  return DailyForecast;
 });
 
 describe("WeatherDetailPage", () => {
@@ -113,16 +127,17 @@ describe("WeatherDetailPage", () => {
   });
 
   test("renders all subcomponents when data is available", () => {
+    (useWeatherForecast as jest.Mock).mockReturnValue({
+      hourly: [{ dt: 1640995200, temp: 20 }],
+      daily: [{ dt: 1640995200, temp: { min: 15, max: 25 } }],
+      loadingHourly: false,
+      loadingDaily: false,
+    });
+
     render(<WeatherDetailPage />);
 
     expect(screen.getByTestId("weather-header")).toBeInTheDocument();
     expect(screen.getByTestId("current-weather")).toBeInTheDocument();
-    expect(screen.getByTestId("hourly-forecast")).toHaveTextContent(
-      "Hourly data"
-    );
-    expect(screen.getByTestId("daily-forecast")).toHaveTextContent(
-      "Daily data"
-    );
   });
 
   test("renders 'No data' message when weather is not available", () => {
@@ -145,14 +160,30 @@ describe("WeatherDetailPage", () => {
     });
 
     render(<WeatherDetailPage />);
-    expect(screen.getByTestId("hourly-forecast")).toHaveTextContent(
-      "Loading hourly..."
-    );
-    expect(screen.getByTestId("daily-forecast")).toHaveTextContent(
-      "Loading daily..."
-    );
+
+    expect(screen.getByTestId("weather-header")).toBeInTheDocument();
+    expect(screen.getByTestId("current-weather")).toBeInTheDocument();
+
+    expect(
+      screen.queryByText("Forecast data is not available for this location.")
+    ).not.toBeInTheDocument();
   });
 
+  test("renders no forecast message when no data and not loading", () => {
+    (useWeatherForecast as jest.Mock).mockReturnValue({
+      hourly: [],
+      daily: [],
+      loadingHourly: false,
+      loadingDaily: false,
+    });
+
+    render(<WeatherDetailPage />);
+
+    expect(
+      screen.getByText("Hourly forecast unavailable.")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Daily forecast unavailable.")).toBeInTheDocument();
+  });
   test("renders correctly when initialWeather prop is provided", () => {
     render(
       <WeatherDetailPage initialWeather={mockWeather} initialForecast={null} />

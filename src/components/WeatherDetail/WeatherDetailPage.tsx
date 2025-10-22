@@ -3,22 +3,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
-import dynamic from "next/dynamic";
 import { RootState } from "@/store/store";
 import { WeatherData, ForecastResponse } from "@/types/weather";
 import { useWeatherForecast } from "@/hooks/useWeatherForecast";
 import WeatherHeader from "./components/WeatherHeader";
+
 import CurrentWeather from "./components/CurrentWeather";
-
-const HourlyForecast = dynamic(() => import("./components/HourlyForecast"), {
-  loading: () => <div>Loading hourly forecast...</div>,
-  ssr: false,
-});
-
-const DailyForecast = dynamic(() => import("./components/DailyForecast"), {
-  loading: () => <div>Loading daily forecast...</div>,
-  ssr: false,
-});
+import HourlyForecast from "./components/HourlyForecast";
+import DailyForecast from "./components/DailyForecast";
 
 import styles from "./WeatherDetail.module.scss";
 
@@ -60,20 +52,8 @@ export default function WeatherDetailPage({
       <CurrentWeather weather={weather} />
 
       <div className={styles.forecastsContainer}>
-        {(hourly.length > 0 || loadingHourly) && (
-          <HourlyForecast hourly={hourly} loading={loadingHourly} />
-        )}
-        {(daily.length > 0 || loadingDaily) && (
-          <DailyForecast daily={daily} loading={loadingDaily} />
-        )}
-        {!loadingHourly &&
-          !loadingDaily &&
-          hourly.length === 0 &&
-          daily.length === 0 && (
-            <div className={styles.noForecast}>
-              <p>Forecast data is not available for this location.</p>
-            </div>
-          )}
+        <HourlyForecast hourly={hourly} loading={loadingHourly} />
+        <DailyForecast daily={daily} loading={loadingDaily} />
       </div>
     </section>
   );
