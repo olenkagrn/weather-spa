@@ -86,7 +86,11 @@ function WeatherCard({ city, onClick }: Props) {
             <span>🌬 {weather.wind.speed} m/s</span>
           </div>
           <div className={styles.meta}>
-            <Link href={`/weather/${city}`} className={styles.detailsBtn}>
+            <Link 
+              href={`/weather/${city}`} 
+              className={styles.detailsBtn}
+              aria-label={`View detailed weather for ${city}`}
+            >
               <ExternalLink size={14} /> <span>Details</span>
             </Link>
 

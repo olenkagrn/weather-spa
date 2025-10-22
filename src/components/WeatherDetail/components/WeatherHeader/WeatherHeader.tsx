@@ -13,7 +13,11 @@ export default function WeatherHeader({ weather }: WeatherHeaderProps) {
   return (
     <div className={styles.header}>
       <div className={styles.header__left}>
-        <Link href="/" className={styles.backLink}>
+        <Link
+          href="/"
+          className={styles.backLink}
+          aria-label="Go back to home page"
+        >
           <ArrowLeft />
         </Link>
         <p className={styles.date}>

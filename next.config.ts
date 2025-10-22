@@ -6,8 +6,10 @@ const nextConfig = {
     gzipSize: true,
   },
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  webpack: (config: any, { dev, isServer }: any) => {
+  webpack: (
+    config: { optimization: { splitChunks: unknown } },
+    { dev, isServer }: { dev: boolean; isServer: boolean }
+  ) => {
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: "all",

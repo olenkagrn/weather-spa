@@ -14,7 +14,7 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <main className={styles.HomePage}>
+    <main id="main-content" className={styles.HomePage}>
       <h1 className={styles.title}>Personal Weather Tracker</h1>
       <SearchBar />
       <WeatherList />

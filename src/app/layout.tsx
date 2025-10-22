@@ -25,7 +25,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
+  userScalable: true,
   themeColor: "#1E40AF",
   colorScheme: "light",
 };
@@ -54,6 +55,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://openweathermap.org" />
       </head>
       <body>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <ReduxProvider>
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </ReduxProvider>
