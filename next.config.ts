@@ -1,10 +1,8 @@
 const nextConfig = {
-  swcMinify: true,
   poweredByHeader: false,
   compress: true,
 
   experimental: {
-    optimizeCss: true,
     gzipSize: true,
   },
 
