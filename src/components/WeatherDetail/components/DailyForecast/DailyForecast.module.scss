@@ -19,7 +19,7 @@
     padding: 0.8rem 1.2rem;
     border-bottom: 1px solid var(--table-border);
     font-size: 1rem;
-    color: #555;
+    color: var(--text-quaternary);
 
     &:last-child {
       border-bottom: none;
@@ -29,7 +29,7 @@
       flex: 1;
       text-align: left;
       font-weight: 500;
-      color: #333;
+      color: var(--text-primary);
     }
     .tempRange {
       display: flex;
@@ -48,11 +48,11 @@
     .description {
       flex: 2;
       text-align: left;
-      color: #777;
+      color: var(--text-tertiary);
       font-size: 0.95rem;
     }
     .dropdownArrow {
-      color: #999;
+      color: var(--text-muted);
     }
   }
 }

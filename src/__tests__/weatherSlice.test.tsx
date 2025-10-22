@@ -19,7 +19,6 @@ describe("weatherSlice reducers", () => {
     const nextState = weatherReducer(state, addCity("Kyiv"));
     expect(nextState.cities).toContain("Kyiv");
 
-    // Adding the same city again does not duplicate
     const nextState2 = weatherReducer(nextState, addCity("Kyiv"));
     expect(nextState2.cities).toEqual(["Kyiv"]);
 

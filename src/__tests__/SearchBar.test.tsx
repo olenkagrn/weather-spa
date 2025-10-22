@@ -44,7 +44,11 @@ describe("SearchBar component", () => {
   });
 
   test("renders input and icon", () => {
-    (useDebounce as jest.Mock).mockReturnValue({ result: [], loading: false });
+    (useDebounce as jest.Mock).mockReturnValue({
+      result: [],
+      loading: false,
+      hasSearched: false,
+    });
     render(<SearchBar />);
     expect(
       screen.getByPlaceholderText("Enter city name...")
@@ -53,13 +57,21 @@ describe("SearchBar component", () => {
   });
 
   test("shows loading indicator when loading", () => {
-    (useDebounce as jest.Mock).mockReturnValue({ result: [], loading: true });
+    (useDebounce as jest.Mock).mockReturnValue({
+      result: [],
+      loading: true,
+      hasSearched: false,
+    });
     render(<SearchBar />);
     expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
   test("shows 'City not found' when no suggestions", () => {
-    (useDebounce as jest.Mock).mockReturnValue({ result: [], loading: false });
+    (useDebounce as jest.Mock).mockReturnValue({
+      result: [],
+      loading: false,
+      hasSearched: true,
+    });
     render(<SearchBar />);
     const input = screen.getByLabelText("Search city") as HTMLInputElement;
     fireEvent.change(input, { target: { value: "UnknownCity" } });
@@ -73,6 +85,7 @@ describe("SearchBar component", () => {
     (useDebounce as jest.Mock).mockReturnValue({
       result: suggestions,
       loading: false,
+      hasSearched: true,
     });
 
     render(<SearchBar />);

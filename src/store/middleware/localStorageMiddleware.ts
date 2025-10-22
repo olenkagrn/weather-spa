@@ -26,6 +26,7 @@ export const localStorageMiddleware: Middleware =
         filteredData.data[city] = weatherState.data[city];
         filteredData.status[city] = weatherState.status[city];
         filteredData.error[city] = weatherState.error[city];
+        filteredData.loadedCities[city] = true; // ← Виправлення: зберігаємо що дані завантажені
       });
 
       localStorage.setItem(LS_KEY, JSON.stringify({ weather: filteredData }));

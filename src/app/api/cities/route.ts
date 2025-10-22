@@ -6,7 +6,6 @@ interface CityData {
   country: string;
 }
 
-// Cache cities for 1 hour since city names don't change frequently
 export const revalidate = 3600;
 
 export async function GET(req: Request) {

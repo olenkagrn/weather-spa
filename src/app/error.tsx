@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import styles from './error.module.scss';
 
 export default function Error({
   error,
@@ -14,31 +15,14 @@ export default function Error({
   }, [error]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "50vh",
-        padding: "2rem",
-        textAlign: "center",
-      }}
-    >
-      <h2>Something went wrong!</h2>
-      <p style={{ margin: "1rem 0", color: "#666" }}>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Something went wrong!</h2>
+      <p className={styles.message}>
         {error.message || "Failed to load this page"}
       </p>
       <button
         onClick={() => reset()}
-        style={{
-          padding: "0.5rem 1rem",
-          backgroundColor: "#f15d46",
-          color: "white",
-          border: "none",
-          borderRadius: "0.5rem",
-          cursor: "pointer",
-        }}
+        className={styles.button}
       >
         Try again
       </button>

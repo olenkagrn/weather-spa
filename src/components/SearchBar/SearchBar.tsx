@@ -12,7 +12,7 @@ export default function SearchBar() {
   const router = useRouter();
   const [value, setValue] = useState("");
 
-  const { result: suggestions, loading } = useDebounce(
+  const { result: suggestions, loading, hasSearched } = useDebounce(
     value,
     1000,
     fetchCitySuggestions
@@ -38,7 +38,7 @@ export default function SearchBar() {
 
       {loading && <div className={styles.loader}>Loading...</div>}
 
-      {!loading && value.trim() && (suggestions?.length ?? 0) === 0 && (
+      {!loading && hasSearched && value.trim() && (suggestions?.length ?? 0) === 0 && (
         <div className={styles.noResults}>
           City not found, please try again.
         </div>

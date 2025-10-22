@@ -15,6 +15,7 @@ describe("useDebounce", () => {
 
     expect(result.current.result).toBeNull();
     expect(result.current.loading).toBe(false);
+    expect(result.current.hasSearched).toBe(false);
   });
 
   test("sets result after debounce delay", async () => {
@@ -36,6 +37,7 @@ describe("useDebounce", () => {
     expect(asyncFn).toHaveBeenCalledWith("hello");
     expect(result.current.result).toBe("success");
     expect(result.current.loading).toBe(false);
+    expect(result.current.hasSearched).toBe(true);
   });
 
   test("resets result if value is empty", () => {
@@ -48,6 +50,7 @@ describe("useDebounce", () => {
     rerender({ value: " " });
     expect(result.current.result).toBeNull();
     expect(result.current.loading).toBe(false);
+    expect(result.current.hasSearched).toBe(false);
     expect(asyncFn).not.toHaveBeenCalled();
   });
 
@@ -99,5 +102,6 @@ describe("useDebounce", () => {
 
     expect(result.current.loading).toBe(false);
     expect(result.current.result).toBe("done");
+    expect(result.current.hasSearched).toBe(true);
   });
 });

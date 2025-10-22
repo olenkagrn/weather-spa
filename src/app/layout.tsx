@@ -1,6 +1,8 @@
 import ReduxProvider from "@/components/Providers/ReduxProvider";
 import "./globals.css";
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: 'Personal Weather Tracker',
@@ -16,7 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <Suspense fallback={<Loading />}>
+            {children}
+          </Suspense>
+        </ReduxProvider>
       </body>
     </html>
   );

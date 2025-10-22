@@ -20,19 +20,19 @@
       display: flex;
       justify-content: space-around;
       margin-top: 1rem;
-      border-top: 1px solid #eee;
+      border-top: 1px solid var(--border-light);
       padding-top: 0.8rem;
 
       div {
         text-align: center;
         font-size: 0.8rem;
-        color: #777;
+        color: var(--text-tertiary);
 
         span {
           display: block;
           margin-top: 0.3rem;
           font-weight: 500;
-          color: #555;
+          color: var(--text-quaternary);
         }
       }
     }

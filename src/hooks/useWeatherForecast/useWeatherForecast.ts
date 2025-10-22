@@ -50,12 +50,11 @@ export const useWeatherForecast = (
           console.warn(`Forecast list is empty for city "${cityName}"`);
           setHourly([]);
           setDaily([]);
-          setLoadingHourly(false); // <-- Додати
-          setLoadingDaily(false); // <-- Додати
+          setLoadingHourly(false);
+          setLoadingDaily(false);
           return;
         }
 
-        // ----- Hourly -----
         const next8Entries = forecastList.slice(0, 8);
         const processedHourly: HourlyData[] = next8Entries.map((h) => ({
           dt: h.dt,
@@ -67,7 +66,6 @@ export const useWeatherForecast = (
         setHourly(processedHourly);
         setLoadingHourly(false);
 
-        // ----- Daily -----
         const dailyMap = new Map<string, DailyData>();
         forecastList.forEach((item) => {
           if (!item || !item.main || !item.weather) return;

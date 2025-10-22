@@ -11,6 +11,23 @@
   --graph-line-color: #ff7300;
   --table-border: #eee;
   --forecast-bg: #fcfcfc;
+  --primary: #f15d46;
+  --primary-hover: #d44a35;
+  --primary-active: #c04030;
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-tertiary: #777;
+  --text-quaternary: #555;
+  --text-muted: #999;
+  --text-gray: #6b7280;
+  --text-dark: #1a202c;
+  --text-info: #01658e;
+  --border-light: #eee;
+  --border-gray: #f3f3f3;
+  --bg-light: #f5f5f5;
+  --bg-info: #e0f2f7;
+  --bg-forecast: #fcfcfc;
+  --link-color: #007bff;
 }
 
 * {

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import WeatherList from "@/components/WeatherList/WeatherList";
 import { fetchWeatherBatch } from "@/store/weather/weatherThunk";
 
-// Моки
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
   useSelector: jest.fn(),

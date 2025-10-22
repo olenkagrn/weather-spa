@@ -7,11 +7,14 @@ export function useDebounce<T>(
 ) {
   const [result, setResult] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!value.trim()) {
       setResult(null);
+      setHasSearched(false);
+      setLoading(false);
       return;
     }
 
@@ -19,10 +22,14 @@ export function useDebounce<T>(
 
     debounceRef.current = setTimeout(async () => {
       setLoading(true);
+      setHasSearched(false);
       try {
         const data = await asyncFn(value.trim());
         setResult(data);
+        setHasSearched(true);
       } catch {
+        setResult(null);
+        setHasSearched(true);
         throw new Error("Failed to fetch data");
       } finally {
         setLoading(false);
@@ -34,5 +41,5 @@ export function useDebounce<T>(
     };
   }, [value, asyncFn, delay]);
 
-  return { result, loading };
+  return { result, loading, hasSearched };
 }
