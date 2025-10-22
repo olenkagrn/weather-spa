@@ -9,10 +9,8 @@ export const loadWeatherFromLocalStorage = (): WeatherState => {
     const parsed = JSON.parse(raw);
     const weatherData = parsed.weather || {};
 
-    // Ініціалізуємо стан для всіх міст з localStorage
     const loadedState = { ...initialState, ...weatherData };
 
-    // Переконуємося, що всі міста мають початковий статус, якщо він відсутній
     loadedState.cities.forEach((city: string) => {
       if (!loadedState.status[city]) {
         loadedState.status[city] = "idle";

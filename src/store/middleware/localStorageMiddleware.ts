@@ -10,16 +10,14 @@ export const localStorageMiddleware: Middleware =
       const state = store.getState();
       const weatherState: WeatherState = state.weather;
 
-      // Зберігаємо всі улюблені міста, незалежно від статусу завантаження
       const dataToSave: WeatherState = {
-        cities: weatherState.cities, // Зберігаємо всі міста
+        cities: weatherState.cities,
         data: {},
         status: {},
         error: {},
         loadedCities: {},
       };
 
-      // Зберігаємо дані тільки для міст з успішно завантаженими даними
       weatherState.cities.forEach((city) => {
         if (
           weatherState.status[city] === "succeeded" &&

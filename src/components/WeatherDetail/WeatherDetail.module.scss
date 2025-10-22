@@ -7,7 +7,7 @@
   margin: 2rem auto;
   background-color: var(--white-default);
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 10px var(--shadow-light);
 
   text-align: center;
   color: var(--text-primary);
@@ -38,4 +38,14 @@
   margin: 3rem auto;
   font-size: 1.2rem;
   color: var(--text-gray);
+}
+
+.noForecast {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--background-light);
+  border-radius: 8px;
+  color: var(--text-gray);
+  font-style: italic;
 }

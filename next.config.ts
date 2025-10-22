@@ -1,4 +1,40 @@
 const nextConfig = {
+  // Оптимізації продуктивності
+  swcMinify: true,
+  poweredByHeader: false,
+  compress: true,
+
+  // Експериментальні налаштування для кращої продуктивності
+  experimental: {
+    optimizeCss: true,
+    gzipSize: true,
+  },
+
+  // Webpack оптимізації
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  webpack: (config: any, { dev, isServer }: any) => {
+    // Оптимізації для production
+    if (!dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: "all",
+        cacheGroups: {
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            priority: -10,
+            chunks: "all",
+          },
+        },
+      };
+    }
+    return config;
+  },
+
   images: {
     remotePatterns: [
       {
@@ -13,7 +49,12 @@ const nextConfig = {
   },
 
   outputFileTracingRoot: __dirname,
-  compress: true,
+
+  // Відключення попереджень про preload в development
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+
   async headers() {
     return [
       {

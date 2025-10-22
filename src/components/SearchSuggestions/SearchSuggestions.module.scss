@@ -10,7 +10,7 @@
   overflow-y: auto;
   z-index: 10;
   list-style: none;
-  box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0.8rem 1.5rem var(--shadow-light);
 
   .suggestion {
     padding: 0.8rem 1.6rem;

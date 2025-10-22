@@ -28,6 +28,12 @@
   --bg-info: #e0f2f7;
   --bg-forecast: #fcfcfc;
   --link-color: #007bff;
+
+  /* Shadow colors */
+  --shadow-light: rgba(0, 0, 0, 0.08);
+  --shadow-subtle: rgba(0, 0, 0, 0.05);
+  --shadow-accent: rgba(233, 43, 22, 0.197);
+  --shadow-accent-light: rgba(233, 43, 22, 0.118);
 }
 
 * {

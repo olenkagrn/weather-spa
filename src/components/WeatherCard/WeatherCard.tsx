@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { RefreshCw, Trash2, ExternalLink } from "lucide-react";
@@ -17,7 +17,7 @@ interface Props {
   onClick?: () => void;
 }
 
-export default function WeatherCard({ city, onClick }: Props) {
+function WeatherCard({ city, onClick }: Props) {
   const dispatch = useDispatch<AppDispatch>();
   const weather = useSelector((s: RootState) => s.weather.data[city]);
   const status = useSelector(
@@ -65,7 +65,9 @@ export default function WeatherCard({ city, onClick }: Props) {
             alt={weather.weather[0].description}
             width={100}
             height={100}
-            priority
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PC9zdmc+"
           />
           <h3 className={styles.city}>
             {weather.name}, {weather.sys.country}
@@ -113,3 +115,5 @@ export default function WeatherCard({ city, onClick }: Props) {
     </div>
   );
 }
+
+export default memo(WeatherCard);

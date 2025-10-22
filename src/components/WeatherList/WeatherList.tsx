@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch } from "@/store/store";
+import { selectCities, selectWeatherStatus, selectLoadedCities } from "@/store/selectors";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import styles from "./WeatherList.module.scss";
 import { fetchWeatherBatch } from "@/store/weather/weatherThunk";
@@ -10,11 +11,9 @@ import Loading from "@/app/loading";
 
 export default function WeatherList() {
   const dispatch = useDispatch<AppDispatch>();
-  const cities = useSelector((state: RootState) => state.weather.cities);
-  const status = useSelector((state: RootState) => state.weather.status);
-  const loadedCities = useSelector(
-    (state: RootState) => state.weather.loadedCities
-  );
+  const cities = useSelector(selectCities);
+  const status = useSelector(selectWeatherStatus);
+  const loadedCities = useSelector(selectLoadedCities);
 
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 

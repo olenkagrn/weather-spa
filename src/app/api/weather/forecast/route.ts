@@ -14,14 +14,14 @@ export async function GET(req: Request) {
 
     if (data === null) {
       return NextResponse.json(
-        { message: "An error occurred" },
-        { status: 500 }
+        { message: "City not found or forecast data unavailable" },
+        { status: 404 }
       );
     }
 
     return NextResponse.json(data);
   } catch (err: unknown) {
-    console.error(err);
+    console.error(`Forecast API error for city "${city}":`, err);
     const message = err instanceof Error ? err.message : "An error occurred";
     return NextResponse.json({ message }, { status: 500 });
   }

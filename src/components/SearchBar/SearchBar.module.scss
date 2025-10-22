@@ -28,7 +28,7 @@
 
     &:focus {
       border: 1px solid var(--accent);
-      box-shadow: 0 0.6rem 1.8rem rgba(233, 43, 22, 0.118);
+      box-shadow: 0 0.6rem 1.8rem var(--shadow-accent-light);
     }
     &::placeholder {
       color: var(--placeholder-text);

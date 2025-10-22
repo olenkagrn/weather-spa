@@ -99,7 +99,16 @@ export const useWeatherForecast = (
         setDaily(processedDaily);
         setLoadingDaily(false);
       } catch (err) {
-        console.error("Failed to fetch forecast data:", err);
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 404) {
+            console.warn(`Forecast not available for city "${cityName}" - city not found in weather database`);
+          } else {
+            console.error(`Failed to fetch forecast data for "${cityName}":`, err.response?.data || err.message);
+          }
+        } else {
+          console.error("Failed to fetch forecast data:", err);
+        }
+        
         setHourly([]);
         setDaily([]);
         setLoadingHourly(false);
